@@ -126,12 +126,12 @@ var MapsLib = {
   //-----custom filters for point data layer
     //---MODIFY column header and values below to match your Google Fusion Table AND index.html
     //-- TEXTUAL OPTION to display legend and filter by non-numerical data in your table
-    var type_column = "'Program Type'";  // -- note use of single & double quotes for two-word column header
+    var type_column = "'Type'";  // -- note use of single & double quotes for two-word column header
     var tempWhereClause = [];
     if ( $("#cbType1").is(':checked')) tempWhereClause.push("Health");
     if ( $("#cbType2").is(':checked')) tempWhereClause.push("Child care");
     if ( $("#cbType3").is(':checked')) tempWhereClause.push("Recreation");
-    if ( $("#cbType4").is(':checked')) tempWhereClause.push("school");
+    if ( $("#cbType4").is(':checked')) tempWhereClause.push("School");
     if ( $("#cbType5").is(':checked')) tempWhereClause.push("Store");
     whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
