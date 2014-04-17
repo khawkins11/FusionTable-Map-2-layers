@@ -129,7 +129,7 @@ var MapsLib = {
     var type_column = "'Type'";  // -- note use of single & double quotes for two-word column header
     var tempWhereClause = [];
     if ( $("#cbType1").is(':checked')) tempWhereClause.push("Health");
-    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Child care");
+    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Child Care");
     if ( $("#cbType3").is(':checked')) tempWhereClause.push("Recreation");
     if ( $("#cbType4").is(':checked')) tempWhereClause.push("School");
     if ( $("#cbType5").is(':checked')) tempWhereClause.push("Store");
