@@ -26,10 +26,10 @@ var MapsLib = {
 
   //MODIFY the encrypted Table IDs of your Fusion Tables (found under File => About)
   //NOTE: numeric IDs will be depricated soon
-  fusionTableId:      "1p3HtGOMZpCYHwwbZPLPGo6rMZ7TO8w_TYA-3wjzg", //Point data layer
+  fusionTableId:      "1QnrYqDRoPlVASyCitDxF0qVaFxQv2vQRzOXHscpq", //Point data layer
   
-  polygon1TableID:    "1ceippR4giBiF-pT9PE1YAUvebFp6_NKvYriccYo", //Outline map layer of CT town boundaries
-  polygon2TableID:    "1VopQGBhRKyyk25EIA5ptScvULxR68d43RhZ1ycM", //Thematic map layer of selected CT school districts
+  polygon1TableID:    "1nkXPlnhxU3pfMtNtL1cSaApWAPi6YYFdgi6IcZs", //Outline map layer of CT town boundaries
+   //Thematic map layer of selected CT school districts
 
   //*MODIFY Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   //*Important* this key is for demonstration purposes. please register your own.
@@ -39,9 +39,9 @@ var MapsLib = {
   //NOTE: if your location column name has spaces in it, surround it with single quotes
   //example: locationColumn:     "'my location'",
   //if your Fusion Table has two-column lat/lng data, see https://support.google.com/fusiontables/answer/175922
-  locationColumn:     "Lat",
+  locationColumn:     "geometry",
 
-  map_centroid:       new google.maps.LatLng(41.7682,-72.684), //center that your map defaults to
+  map_centroid:       new google.maps.LatLng(41.7678,72.7539), //center that your map defaults to
   locationScope:      "connecticut",      //geographical area appended to all address searches
   recordName:         "result",       //for showing number of results
   recordNamePlural:   "results",
@@ -91,14 +91,6 @@ var MapsLib = {
       templateId: 2
     });
 
-    MapsLib.polygon2 = new google.maps.FusionTablesLayer({
-      query: {
-        from:   MapsLib.polygon2TableID,
-        select: "geometry"
-      },
-      styleId: 2,
-      templateId: 2
-    });
 
     //reset filters
     $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
@@ -125,9 +117,6 @@ var MapsLib = {
     if ($("#rbPolygon1").is(':checked')) {
       MapsLib.polygon1.setMap(map);
     }
-    else if ($("#rbPolygon2").is(':checked')) {
-      MapsLib.polygon2.setMap(map);
-    }
 
     var address = $("#search_address").val();
     MapsLib.searchRadius = $("#search_radius").val();
@@ -139,9 +128,11 @@ var MapsLib = {
     //-- TEXTUAL OPTION to display legend and filter by non-numerical data in your table
     var type_column = "'Program Type'";  // -- note use of single & double quotes for two-word column header
     var tempWhereClause = [];
-    if ( $("#cbType1").is(':checked')) tempWhereClause.push("Interdistrict");
-    if ( $("#cbType2").is(':checked')) tempWhereClause.push("District");
-    if ( $("#cbType3").is(':checked')) tempWhereClause.push("MorePreK");
+    if ( $("#cbType1").is(':checked')) tempWhereClause.push("Health");
+    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Child care");
+    if ( $("#cbType3").is(':checked')) tempWhereClause.push("Recreation");
+    if ( $("#cbType4").is(':checked')) tempWhereClause.push("school");
+    if ( $("#cbType5").is(':checked')) tempWhereClause.push("Store");
     whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
     //-- NUMERICAL OPTION - to display and filter a column of numerical data in your table, use this instead
@@ -215,8 +206,6 @@ var MapsLib = {
       MapsLib.searchrecords.setMap(null);
     if (MapsLib.polygon1 != null)
       MapsLib.polygon1.setMap(null);
-    if (MapsLib.polygon2 != null)
-      MapsLib.polygon2.setMap(null);
     if (MapsLib.addrMarker != null)
       MapsLib.addrMarker.setMap(null);
     if (MapsLib.searchRadiusCircle != null)
